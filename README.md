@@ -10,9 +10,15 @@ Sheh is a command line tool that broadcast you terminal to your browser locally 
 
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/d960b4ee-4687-4b73-a508-61505fe1f29b" height="400" alt="linux-sheh" />
-  <img src="https://github.com/user-attachments/assets/7cf8c742-0b32-4192-b9a2-3d5f4df3d942" width="600">
+  <img src="https://github.com/user-attachments/assets/309e08c2-7caf-497d-a907-91a730661955" width="800" alt="sheh-linux" />
+  <p><em>Running sheh on Linux</em></p>
+  
+  <br />
+
+  <img src="https://github.com/user-attachments/assets/e44ca70a-a4d2-4233-af18-7902b524f10b" width="800" alt="win-sheh" />
+  <p><em>Running sheh on Windows</em></p>
 </div>
+
 
 ---
 
