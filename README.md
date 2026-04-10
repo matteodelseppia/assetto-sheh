@@ -32,7 +32,7 @@ Sheh is a command line tool that broadcast you terminal to your browser locally 
 Get via the node package manager registry.
 
 ```bash
-npm install -g sheh
+npm install -g @waxory/sheh
 ```
 
 ---
