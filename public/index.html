@@ -1,0 +1,85 @@
+<!--
+
+
+
+    Sheh. Use the terminal through the browser locally.
+    Copyright (C) 2026  waxodium
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/xterm.min.css">
+    <style>
+        body { margin: 0; background: #0d1117; overflow: hidden; }
+        #terminal { height: 100vh; width: 100vw; }
+    </style>
+</head>
+<body>
+    <div id="terminal"></div>
+    <script src="/lib/xterm.min.js"></script>
+    <script src="/lib/xterm-addon-fit.min.js"></script>
+    <script>
+        const terminal = new Terminal({
+            cursorBlink: true,
+            theme: { background: '#0d1117' },
+            fontFamily: 'monospace',
+            fontSize: 14,
+            scrollback: 5000
+        });
+
+        const fitAddon = new FitAddon.FitAddon();
+        terminal.loadAddon(fitAddon);
+        terminal.open(document.getElementById('terminal'));
+        fitAddon.fit();
+        terminal.focus();
+
+        const ws = new WebSocket(`ws://${window.location.host}`);
+
+        const sendResize = () => {
+            fitAddon.fit();
+            if (ws.readyState === 1) {
+                ws.send(JSON.stringify({ type: 'resize', cols: terminal.cols, rows: terminal.rows }));
+            }
+        };
+
+        ws.onopen = sendResize;
+
+        ws.onmessage = async function(event) {
+            let data;
+            if (event.data instanceof Blob) {
+                data = await event.data.text()
+            } else {
+                data = event.data
+            }
+
+            terminal.write(data)
+        };
+
+        terminal.onData(data => { 
+            if (ws.readyState === 1) ws.send(data)
+        })
+
+        window.onresize = sendResize;
+
+
+    </script>
+</body>
+</html>
