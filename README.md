@@ -2,7 +2,7 @@
 
 > **S**hell **E**xposed **H**TTP
 
-Sheh is a command line tool that broadcast you terminal to your browser locally and with local network. As sheh is intended to be cross-platform.
+Sheh is a command line tool that broadcast you terminal to your browser locally and with local network. Sheh works for every Unix/Linux shells and even powershell !
 
 ![early](https://img.shields.io/badge/status-early-gray)
 ![javascript](https://img.shields.io/badge/language-javascript-yellow)
@@ -63,26 +63,30 @@ Open the URL. Your shell is live in the browser.
 Sheh is simplified. Including its functionality and setup.
 
 
-![svg](https://github.com/user-attachments/assets/35b028c2-6b9c-4bb2-af0b-cd3a55353af8)
+<img width="1875" height="1313" alt="features" src="https://github.com/user-attachments/assets/d79a0400-4ff4-4c0b-b899-03f039cc1e4d" />
 
-
+### Traits:
+* Works for every shells.
+* Host locally on your network or machine.
+* Usage through Browser. (Modern such as Firefox, Chrome)
 
 ---
 
 ## Shells Support
-🚧 This project is under development and early concept construction. 
 
-While Sheh has a focus to widely support mainstream shells as much as possible. 🌐
+### New❗ all shells are finally supported. 
+
+Sheh will now starts with your current **running** shell instead of launching your default one. So, shells can run interactively depends on which shell you ran your `sheh` command from.
 
 | Shell | Status |
 | :--- | :--- |
 | `bash` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `powershell` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
-| `zsh` | ![](https://img.shields.io/badge/unsupported-1a1a1a?style=flat-square&labelColor=1a1a1a&color=ffffff) |
-| `fish` | ![](https://img.shields.io/badge/unsupported-1a1a1a?style=flat-square&labelColor=1a1a1a&color=ffffff) |
-| `tcsh` | ![](https://img.shields.io/badge/unsupported-1a1a1a?style=flat-square&labelColor=1a1a1a&color=ffffff) |
-| `ksh` | ![](https://img.shields.io/badge/unsupported-1a1a1a?style=flat-square&labelColor=1a1a1a&color=ffffff) |
-
+| `zsh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `fish` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `tcsh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `ksh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `dash`| ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 ---
 
 ## Notes
