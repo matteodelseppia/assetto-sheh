@@ -5,12 +5,11 @@
     "ws": "^8.20.0"
   },
   "name": "@waxory/sheh",
-  "version": "1.0.2",
+  "version": "1.1.2",
   "description": "Shell Exposed over HTTP. Use your terminal through the browser locally",
   "main": "server.js",
-  "devDependencies": {},
   "bin": {
-    "sheh": "./server.js"
+    "sheh": "./src/server.js"
   },
   "keywords": [
     "terminal",
