@@ -5,6 +5,8 @@
 Inspiration and Alternative to [Gotty](https://github.com/yudai/gotty).
 Sheh is a command line tool that broadcast you terminal to your browser locally and with local network. Sheh works for every Unix/Linux shells and even powershell !
 
+And you should check out my [Medium Blog post](https://medium.com/@waxodium/use-powershell-in-the-browser-8cd34ecfff38) about Sheh 😊
+
 ![early](https://img.shields.io/badge/status-early-gray)
 ![javascript](https://img.shields.io/badge/language-javascript-yellow)
 ![license](https://img.shields.io/badge/license-GPLv3.0-blue)
