@@ -1,7 +1,8 @@
 # Sheh
 
-> **S**hell **E**xposed **H**TTP
+> **Sh**ell **E**xposed **H**TTP
 
+Inspiration and Alternative to [Gotty](https://github.com/yudai/gotty).
 Sheh is a command line tool that broadcast you terminal to your browser locally and with local network. Sheh works for every Unix/Linux shells and even powershell !
 
 ![early](https://img.shields.io/badge/status-early-gray)
@@ -24,7 +25,7 @@ Sheh is a command line tool that broadcast you terminal to your browser locally 
 
 ## Stack
 
-***S**hell **E**xposed **H**TTP* are currently built with
+***Sh**ell **E**xposed **H**TTP* are currently built with
 
 ![express](https://img.shields.io/badge/express-111?style=flat-square&logo=express&logoColor=red)
 ![ws](https://img.shields.io/badge/ws-111?style=flat-square&logo=websocket&logoColor=white)
@@ -85,6 +86,7 @@ Sheh will now starts with your current **running** shell instead of launching yo
 | `zsh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `fish` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `tcsh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `csh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `ksh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `dash`| ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 ---
@@ -102,6 +104,6 @@ Sheh will now starts with your current **running** shell instead of launching yo
 ---
 
 ## LICENSE
-Sheh (**S**hell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/waxodium/sheh/blob/main/LICENSE) Licensed
+Sheh (**Sh**ell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/waxodium/sheh/blob/main/LICENSE) Licensed
 
 
