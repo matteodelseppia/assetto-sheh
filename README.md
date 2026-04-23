@@ -2,10 +2,8 @@
 
 > **Sh**ell **E**xposed **H**TTP
 
-Inspiration and Alternative to [Gotty](https://github.com/yudai/gotty).
+Inspiration and to [Gotty](https://github.com/yudai/gotty).
 Sheh is a command line tool that broadcast you terminal to your browser locally and with local network. Sheh works for every Unix/Linux shells and even powershell !
-
-And you should check out my [Medium Blog post](https://medium.com/@waxodium/use-powershell-in-the-browser-8cd34ecfff38) about Sheh 😊
 
 ![early](https://img.shields.io/badge/status-early-gray)
 ![javascript](https://img.shields.io/badge/language-javascript-yellow)
@@ -72,25 +70,39 @@ Sheh is simplified. Including its functionality and setup.
 * Works for every shells.
 * Host locally on your network or machine.
 * Usage through Browser. (Modern such as Firefox, Chrome)
+* UX keys control for mobile devices.
 
 ---
 
 ## Shells Support
-
-### New❗ all shells are finally supported. 
-
-Sheh will now starts with your current **running** shell instead of launching your default one. So, shells can run interactively depends on which shell you ran your `sheh` command from.
+Sheh starts with your current **running** shell. So, shells can run interactively depends on processing shell you ran your `sheh` command from.
+Below are the verified and tested shells:
 
 | Shell | Status |
 | :--- | :--- |
+| `sh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `bash` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
-| `powershell` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `zsh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
-| `fish` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
-| `tcsh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
-| `csh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `ksh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `dash`| ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `tcsh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `csh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `powershell` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `fish` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+
+---
+
+## News 📢
+### 1.2.0 
+
+Using a terminal on a touchscreen is no longer a struggle. 
+* **Modifier Keys:** Added on-screen **Ctrl**, **Alt**, and **Arrows**.
+* **Sticky Control:** The Ctrl key now toggles on-click for easier multi-key commands.
+* **Responsive Layout:** Optimized terminal scaling for mobile browser views.
+* **Touch Gestures:** Native support for **pinch-to-zoom**, allowing you to easily scale terminal text.
+
+More in [CHANGELOG] for progressive versions details
+
 ---
 
 ## Notes
@@ -109,3 +121,4 @@ Sheh will now starts with your current **running** shell instead of launching yo
 Sheh (**Sh**ell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/waxodium/sheh/blob/main/LICENSE) Licensed
 
 
+[CHANGELOG]: https://github.com/waxodium/sheh/blob/main/CHANGELOG.md

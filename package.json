@@ -5,7 +5,7 @@
     "ws": "^8.20.0"
   },
   "name": "@waxory/sheh",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Shell Exposed over HTTP. Use your terminal through the browser locally",
   "main": "server.js",
   "bin": {
@@ -21,7 +21,8 @@
     "local",
     "web-terminal",
     "interactive",
-    "cli"
+    "cli",
+    "tty"
   ],
   "repository": {
     "type": "git",

@@ -1,85 +1,293 @@
-<!--
 
 
+<!-- 
 
-    Sheh. Use the terminal through the browser locally.
-    Copyright (C) 2026  waxodium
+Sheh. Use the terminal through the browser locally.
+Copyright (C) 2026  waxodium
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 -->
 
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="/css/xterm.min.css">
-    <style>
-        body { margin: 0; background: #0d1117; overflow: hidden; }
-        #terminal { height: 100vh; width: 100vw; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Sheh Terminal</title>
+<link rel="stylesheet" href="/css/xterm.min.css">
+<style>
+    :root {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --active-color: #58a6ff;
+        --border-color: #1e2430;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-color);
+        overflow: hidden;
+        position: fixed;
+        touch-action: none;
+    }
+
+    #viewport {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-color);
+    }
+
+    #terminal {
+        flex: 1;
+        width: 100%;
+        overflow: hidden;
+        touch-action: pan-y pinch-zoom;
+    }
+
+    #controls {
+        display: none; 
+        grid-template-rows: repeat(2, 36px);
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(52px, 1fr);
+        gap: 2px;
+        padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+        background: var(--bg-color);
+        border-top: 1px solid var(--border-color);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .key {
+        background: transparent;
+        color: rgba(201, 209, 217, 0.35);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: monospace;
+        font-size: 10px;
+        font-weight: 600;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .key:active, .key.active-mod {
+        color: var(--active-color);
+        background: rgba(88, 166, 255, 0.08);
+        border-radius: 3px;
+    }
+</style>
 </head>
 <body>
+
+<div id="viewport">
     <div id="terminal"></div>
-    <script src="/lib/xterm.min.js"></script>
-    <script src="/lib/xterm-addon-fit.min.js"></script>
-    <script>
-        const terminal = new Terminal({
-            cursorBlink: true,
-            theme: { background: '#0d1117' },
-            fontFamily: 'monospace',
-            fontSize: 14,
-            scrollback: 5000
-        });
 
-        const fitAddon = new FitAddon.FitAddon();
-        terminal.loadAddon(fitAddon);
-        terminal.open(document.getElementById('terminal'));
+    <div id="controls">
+        <div class="key" data-code="\x1b">ESC</div>
+        <div class="key" data-mod="ctrl">CTRL</div>
+        <div class="key" data-mod="alt">ALT</div>
+        <div class="key" data-code="\t">TAB</div>
+        <div class="key" data-code="\x1b[H">HOME</div>
+        <div class="key" data-code="\x1b[F">END</div>
+        <div class="key" data-code="\x1b[5~">PGUP</div>
+        <div class="key" data-code="\x1b[6~">PGDN</div>
+        <div class="key" data-code="\x1b[A">↑</div>
+        <div class="key" data-code="\x1b[B">↓</div>
+        <div class="key" data-code="\x1b[D">←</div>
+        <div class="key" data-code="\x1b[C">→</div>
+        <div class="key" data-code="-">-</div>
+        <div class="key" data-code="/">/</div>
+        <div class="key" data-code="\">\</div>
+        <div class="key" data-code="|">|</div>
+    </div>
+</div>
+
+<script src="/lib/xterm.min.js"></script>
+<script src="/lib/xterm-addon-fit.min.js"></script>
+<script>
+    const terminal = new Terminal({
+        cursorBlink: true,
+        theme: { background: '#0d1117' },
+        fontFamily: 'monospace',
+        fontSize: 14
+    });
+
+    const fitAddon = new FitAddon.FitAddon();
+    terminal.loadAddon(fitAddon);
+    
+    const terminalElement = document.getElementById('terminal')
+    const controlsElement = document.getElementById('controls')
+    const viewport = document.getElementById('viewport')
+    
+    terminal.open(terminalElement);
+    const socket = new WebSocket("ws://" + window.location.host)
+
+    const Mobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    if (Mobile === true) {
+        controlsElement.style.display = "grid";
+    } else {
+        controlsElement.style.display = "none";
+    }
+
+    function syncLayout() {
+        if (Mobile === true && window.visualViewport) {
+            const visualViewport = window.visualViewport;
+            viewport.style.height = visualViewport.height + "px";
+            viewport.style.transform = "translateY(" + visualViewport.offsetTop + "px)";
+        } else {
+            viewport.style.height = '100vh';
+            viewport.style.transform = 'none';
+        }
+
+        window.scrollTo(0, 0);
         fitAddon.fit();
-        terminal.focus();
 
-        const ws = new WebSocket(`ws://${window.location.host}`);
+        if (socket.readyState === 1) {
+            const resizeData = { 
+                type: 'resize', 
+                cols: terminal.cols, 
+                rows: terminal.rows 
+            };
+            socket.send(JSON.stringify(resizeData));
+        }
+    }
 
-        const sendResize = () => {
-            fitAddon.fit();
-            if (ws.readyState === 1) {
-                ws.send(JSON.stringify({ type: 'resize', cols: terminal.cols, rows: terminal.rows }));
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', syncLayout)
+        window.visualViewport.addEventListener('scroll', syncLayout)
+    }
+    window.addEventListener('resize', syncLayout)
+    window.addEventListener('load', function() {
+        setTimeout(syncLayout, 100)
+    });
+
+    terminal.onData(function(data) {
+        if (socket.readyState === 1) {
+            socket.send(data)
+        }
+    });
+
+    socket.onmessage = async function(event) {
+        let messageText
+        if (event.data instanceof Blob) {
+            messageText = await event.data.text()
+        } else {
+            messageText = event.data
+        }
+        terminal.write(messageText)
+    };
+
+    let pinchStartDistance = null
+    let pinchStartFontSize = terminal.options.fontSize
+
+    terminalElement.addEventListener('touchstart', function(event) {
+        if (event.touches.length === 2) {
+            const deltaX = event.touches[0].clientX - event.touches[1].clientX
+            const deltaY = event.touches[0].clientY - event.touches[1].clientY
+            
+            const distanceSquared = (deltaX * deltaX) + (deltaY * deltaY)
+            pinchStartDistance = Math.sqrt(distanceSquared)
+            
+            pinchStartFontSize = terminal.options.fontSize
+        }
+    });
+
+    terminalElement.addEventListener('touchmove', function(event) {
+        if (event.touches.length === 2 && pinchStartDistance !== null) {
+            const deltaX = event.touches[0].clientX - event.touches[1].clientX
+            const deltaY = event.touches[0].clientY - event.touches[1].clientY
+            
+            const currentDistanceSquared = (deltaX * deltaX) + (deltaY * deltaY)
+            const currentDistance = Math.sqrt(currentDistanceSquared)
+            
+            const scaleFactor = currentDistance / pinchStartDistance
+            let newFontSize = Math.round(pinchStartFontSize * scaleFactor)
+
+            if (newFontSize < 8) { newFontSize = 8; }
+            if (newFontSize > 32) { newFontSize = 32; }
+
+            if (newFontSize !== terminal.options.fontSize) {
+                terminal.options.fontSize = newFontSize
+                syncLayout(); 
             }
-        };
+        }
+    });
 
-        ws.onopen = sendResize;
+    terminalElement.addEventListener('touchend', function() {
+        terminal.focus()
+    });
 
-        ws.onmessage = async function(event) {
-            let data;
-            if (event.data instanceof Blob) {
-                data = await event.data.text()
-            } else {
-                data = event.data
+    let controlKeyIsActive = false
+    let altKeyIsActive = false
+
+    const controlButtons = document.querySelectorAll('.key')
+    controlButtons.forEach(function(button) {
+        button.addEventListener('pointerdown', function(event) {
+            event.preventDefault()
+            
+            const modifierType = button.getAttribute('data-mod')
+            const dataCode = button.getAttribute('data-code')
+
+            if (modifierType === 'ctrl') {
+                controlKeyIsActive = !controlKeyIsActive;
+                button.classList.toggle('active-mod', controlKeyIsActive)
+            } 
+            else if (modifierType === 'alt') {
+                altKeyIsActive = !altKeyIsActive;
+                button.classList.toggle('active-mod', altKeyIsActive)
+            } 
+            else if (dataCode) {
+                let finalString = dataCode.replace('\\x1b', '\x1b').replace('\\t', '\t');
+                
+                if (controlKeyIsActive === true && finalString.length === 1) {
+                    const charCode = finalString.toLowerCase().charCodeAt(0)
+                    if (charCode >= 97 && charCode <= 122) {
+                        finalString = String.fromCharCode(charCode - 96);
+                    }
+                }
+
+                if (socket.readyState === 1) {
+                    socket.send(finalString)
+                }
+
+                controlKeyIsActive = false
+                altKeyIsActive = false
+                document.querySelectorAll('.key[data-mod]').forEach(function(modButton) {
+                    modButton.classList.remove('active-mod')
+                });
             }
-
-            terminal.write(data)
-        };
-
-        terminal.onData(data => { 
-            if (ws.readyState === 1) ws.send(data)
-        })
-
-        window.onresize = sendResize;
+            terminal.focus()
+        });
+    });
 
 
-    </script>
+
+</script>
 </body>
 </html>
