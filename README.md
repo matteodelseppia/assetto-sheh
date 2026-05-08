@@ -2,7 +2,7 @@
 
 > **Sh**ell **E**xposed **H**TTP
 
-Inspiration [Gotty](https://github.com/yudai/gotty).
+[Gotty](https://github.com/yudai/gotty) inspired.
 Sheh is a command line tool that broadcast you terminal to your browser locally and with local network. Sheh works for every Unix/Linux shells and even powershell !
 
 ![early](https://img.shields.io/badge/status-early-gray)
@@ -28,10 +28,11 @@ Sheh is a command line tool that broadcast you terminal to your browser locally 
 ***Sh**ell **E**xposed **H**TTP* are currently built with
 
 ![express](https://img.shields.io/badge/express-111?style=flat-square&logo=express&logoColor=red)
-![ws](https://img.shields.io/badge/ws-111?style=flat-square&logo=websocket&logoColor=white)
+![ws](https://img.shields.io/badge/ws-111?style=flat-square&logo=socketdotio&logoColor=white)
 ![node-pty](https://img.shields.io/badge/node--pty-111?style=flat-square&logo=gnometerminal&logoColor=white)
-![xterm.js](https://img.shields.io/badge/xterm.js-111?style=flat-square&logo=windowsterminal&logoColor=white)
+![xterm.js](https://img.shields.io/badge/xterm.js-111?style=flat-square&logo=anydesk&logoColor=white)
 ![node](https://img.shields.io/badge/node_standard_library-111?style=flat-square&logo=nodedotjs&logoColor=green)
+![morgan](https://img.shields.io/badge/morgan-111?style=flat-square&logo=datadog&logoColor=62F095)
 
 ---
 
@@ -93,15 +94,19 @@ Below are the verified and tested shells:
 ---
 
 ## News 📢
-### 1.2.0 
+### 1.3.0
 
-Using a terminal on a touchscreen is no longer a struggle. 
-* **Modifier Keys:** Added on-screen **Ctrl**, **Alt**, and **Arrows**.
-* **Sticky Control:** The Ctrl key now toggles on-click for easier multi-key commands.
-* **Responsive Layout:** Optimized terminal scaling for mobile browser views.
-* **Touch Gestures:** Native support for **pinch-to-zoom**, allowing you to easily scale terminal text.
+### Added
+- Web Request Logs output by default on server visits.
+  - User-Agent
+  - Server's active IP
+  - Status
+  - Response time
 
-More in [CHANGELOG] for progressive versions details
+### Changed
+- Server no longer strictly use 8080 port and is replaced with Ephemeral port.
+
+Check more in [CHANGELOG]
 
 ---
 
@@ -111,7 +116,7 @@ More in [CHANGELOG] for progressive versions details
 > Sheh is in an early stage of concept and development. Expect bugs, vulnerabilities, and missing features.
 
 > [!CAUTION]
-> Sheh is for local use only and does not include built-in authentication or security features. This is not a sandboxed environment, it is a live broadcast of your actual terminal. Any commands executed or changes made within Sheh will take effect on your machine in real time.
+> Sheh is intended for local use only and provides no built-in authentication, encryption, or sandboxing. By running this application, you are creating a live, unshielded broadcast of your system's terminal; any commands executed as malicious or otherwise WILL impact your host machine in real time. In accordance with the GPL-3.0 license, this software is provided "as is" without warranty of any kind. The authors assume no liability for data loss, security breaches, or system damage resulting from its use. Use at your own risk.
 
 ![](https://img.shields.io/badge/unsupported-1a1a1a?style=flat-square&labelColor=1a1a1a&color=ffffff) Termux is currently not supported. Sheh relies on a native PTY environment, which is unavailable in Termux's sandbox. Support is planned for a future release.
 
@@ -122,3 +127,5 @@ Sheh (**Sh**ell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/waxodium/s
 
 
 [CHANGELOG]: https://github.com/waxodium/sheh/blob/main/CHANGELOG.md
+
+

@@ -24,12 +24,13 @@
 */
 
 
-const express = require('express');
+const express = require('express')
 const http = require('http')
 const nodepty = require('node-pty')
 const { WebSocketServer } = require('ws')
 const path = require('path')
 const os = require('os')
+const morgan = require('morgan')
 const { execSync } = require('child_process')
 
 const webapp = express()
@@ -55,8 +56,8 @@ function getShell() {
 }
 
 
-const webSocketServe = new WebSocketServer({ server })
 
+const webSocketServe = new WebSocketServer({ server })
 webSocketServe.on('connection', (websocket) => {
 
 
@@ -97,10 +98,17 @@ webSocketServe.on('connection', (websocket) => {
 });
 
 
-server.listen(8080, '0.0.0.0', () => {
+
+
+
+
+server
+    .listen(0, '0.0.0.0', () => {
     const Networkdetail = Object.values(os.networkInterfaces()).flat();
     const network = Networkdetail.find(details => details.family === 'IPv4' && details.internal === false);
-
+    
+    const assigned = server.address().port;
+    
     let address
     if (network) {
         address = network.address
@@ -112,11 +120,38 @@ server.listen(8080, '0.0.0.0', () => {
     const reset = '\x1b[0m'
     const bold = '\x1b[1m'
 
-    console.log(`\n${bold}Shell Exposed HTTP${reset}`); 
-    console.log(`${dimWhite}Status:\x1b[1m\x1b[32m Online ${reset}`);
-    console.log(`${dimWhite}Port:${coralGreen} 8080${reset}`);
-    
-    console.log(`\n${lowerGreen}Local:${reset}   http://localhost:${coralGreen}8080${reset}`);
-    console.log(`${lowerGreen}Network:${reset} http://${address}:${coralGreen}8080${reset}`);
-    
+console.log(`\n${bold}Shell Exposed HTTP${reset}
+${dimWhite}Status:${coralGreen} Online ${reset}
+${dimWhite}Port:${coralGreen} ${assigned}${reset}
+
+${lowerGreen}Local:${reset} http://localhost:${coralGreen}${assigned}${reset}
+${lowerGreen}Network:${reset} http://${address}:${coralGreen}${assigned}${reset}
+`);
 });
+
+
+
+
+const cyan = "\x1b[36m";
+const green = "\x1b[32m";
+const recolor = "\x1b[0m";
+webapp.use(morgan((tokens, request, response) => {
+ 
+
+    const method = tokens.method(request, response);
+    const url = tokens.url(request, response);
+    const status = tokens.status(request, response);
+    const browser = request.get('User-Agent');
+
+
+
+    morgan(`${cyan}:method${recolor} :url ${green}:status${recolor} :res[content-length] - :response-time ms\nIP: :remote-addr\nServer on :referrer`);
+    return `${cyan}${method}${recolor} ${url} - Status: ${green}${status}${recolor} - Agent: ${browser}`
+
+
+}));
+
+webapp.use(
+    morgan(`${cyan}:method${recolor} :url ${green}:status${recolor} :res[content-length] - :response-time ms\nIP: :remote-addr\nServer on :referrer`)
+);
+
