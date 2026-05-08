@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Termux terminal support.
+- Request Logging.
+
+### Changed
+- Uses Ephemeral Port instead of 8080.
 
 ## [1.2.0] - 2024-04-23
 ### Added
