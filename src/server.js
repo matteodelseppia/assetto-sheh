@@ -145,7 +145,6 @@ webapp.use(morgan((tokens, request, response) => {
 
 
 
-    morgan(`${cyan}:method${recolor} :url ${green}:status${recolor} :res[content-length] - :response-time ms\nIP: :remote-addr\nServer on :referrer`);
     return `${cyan}${method}${recolor} ${url} - Status: ${green}${status}${recolor} - Agent: ${browser}`
 
 

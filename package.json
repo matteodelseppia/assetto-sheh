@@ -6,7 +6,7 @@
     "ws": "^8.20.0"
   },
   "name": "@waxory/sheh",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Shell Exposed over HTTP. Use your terminal through the browser locally",
   "main": "server.js",
   "bin": {
