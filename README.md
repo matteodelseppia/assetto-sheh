@@ -91,6 +91,10 @@ Below are the verified and tested shells:
 | `powershell` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `fish` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 
+
+Niche shell supports:
+[CGTerm](https://github.com/MasterArd/CGTerm) & [fcsh](https://github.com/waxodium/fcsh)
+
 ---
 
 ## News 📢
@@ -127,5 +131,6 @@ Sheh (**Sh**ell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/waxodium/s
 
 
 [CHANGELOG]: https://github.com/waxodium/sheh/blob/main/CHANGELOG.md
+
 
 
