@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Termux terminal support.
+- Termination Feature.
 
 ## [1.3.1] - 2026-05-10
 ### Fixed
