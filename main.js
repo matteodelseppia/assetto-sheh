@@ -24,6 +24,13 @@ program
     });
 
 program
+  .command('version')
+  .description('Display the current version')
+  .action(() => {
+    console.log(pkg.version);
+  });
+
+program
     .name('sheh')
     .version(pkg.version, '-v, --version')
     .addHelpText('after');
