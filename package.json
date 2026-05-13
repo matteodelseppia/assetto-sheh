@@ -10,6 +10,9 @@
   "version": "1.4.0",
   "description": "Shell Exposed over HTTP. Use your terminal through the browser locally",
   "main": "server.js",
+  "scripts": {
+    "dev": "node main.js"
+  },
   "bin": {
     "sheh": "./main.js"
   },
