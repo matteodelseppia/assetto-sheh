@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Termux terminal support.
 
-## [1.4.0] - [NOTDATED]
+## [1.4.0] - 2026-05-13
 ### Added
 - Command Line Interface
     - commands
