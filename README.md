@@ -5,7 +5,7 @@
 [Gotty](https://github.com/yudai/gotty) inspired.
 Sheh is a command line tool that broadcast you terminal to your browser locally and with local network. Sheh works for every Unix/Linux shells and even powershell !
 
-![early](https://img.shields.io/badge/status-early-gray)
+![NPM Version](https://img.shields.io/npm/v/@waxory/sheh?color=red)
 ![javascript](https://img.shields.io/badge/language-javascript-yellow)
 ![license](https://img.shields.io/badge/license-GPLv3.0-blue)
 
@@ -70,7 +70,7 @@ Sheh is simplified. Including its functionality and setup.
 ### Traits:
 * Works for every shells.
 * Host locally on your network or machine.
-* Usage through Browser. (Modern such as Firefox, Chrome)
+* Usage through Browser. (Modern such as Firefox, Chrome, Edge)
 * UX keys control for mobile devices.
 
 ---
@@ -93,22 +93,20 @@ Below are the verified and tested shells:
 
 
 Niche shell supports:
-[CGTerm](https://github.com/MasterArd/CGTerm) & [fcsh](https://github.com/waxodium/fcsh)
+[CGTerm](https://github.com/MasterArd/CGTerm) & [fcsh](https://github.com/waxodium/fcsh). Check them out!
 
 ---
 
 ## News 📢
-### 1.3.0
+### 1.4.0
 
 ### Added
-- Web Request Logs output by default on server visits.
-  - User-Agent
-  - Server's active IP
-  - Status
-  - Response time
+- Command Line Interface and commands
+    - shell: display sheh detected shell
+    - version: print version number
+    - help: show the CLI manual
+    - server: manages sheh childs
 
-### Changed
-- Server no longer strictly use 8080 port and is replaced with Ephemeral port.
 
 Check more in [CHANGELOG]
 
@@ -131,6 +129,8 @@ Sheh (**Sh**ell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/waxodium/s
 
 
 [CHANGELOG]: https://github.com/waxodium/sheh/blob/main/CHANGELOG.md
+
+
 
 
 
