@@ -97,10 +97,6 @@ webSocketServe.on('connection', (websocket) => {
 
 
 function startServer() {
-    const server = http.createServer((request, response) => {
-        response.end('SH exposed HTTP');
-    });
-
     server.listen(0, '0.0.0.0', () => {
         const Networkdetail = Object.values(os.networkInterfaces()).flat();
         const network = Networkdetail.find(details => details.family === 'IPv4' && details.internal === false);

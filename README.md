@@ -107,6 +107,9 @@ Niche shell supports:
     - help: show the CLI manual
     - server: manages sheh childs
 
+> [!CAUTION]
+> 1.4.0 is deprecated because of a critical code mistake, please use  the later version of sheh
+(>v1.4.0)
 
 Check more in [CHANGELOG]
 
