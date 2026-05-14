@@ -57,7 +57,7 @@ And it will outputs something like this:
 
 <img width="612" height="260" alt="output" src="https://github.com/user-attachments/assets/ad4c870e-0555-41a6-ab6a-8de1c4b65950" />
 
-Open the URL. Your shell is live in the browser.
+[Visit sheh wiki](https://github.com/waxodium/sheh/wiki) for more documentations and CLI usage
 
 ---
 
