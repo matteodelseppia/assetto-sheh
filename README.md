@@ -65,7 +65,8 @@ And it will outputs something like this:
 Sheh is simplified. Including its functionality and setup.
 
 
-<img width="1875" height="1313" alt="features" src="https://github.com/user-attachments/assets/d79a0400-4ff4-4c0b-b899-03f039cc1e4d" />
+<img width="1500" height="562" alt="sheh" src="https://github.com/user-attachments/assets/102c9ab5-cbe6-49c0-a43f-2f7826904cda" />
+
 
 ### Traits:
 * Works for every shells.
@@ -90,6 +91,7 @@ Below are the verified and tested shells:
 | `csh` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `powershell` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 | `fish` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
+| `nushell` | ![](https://img.shields.io/badge/supported-0d2e14?style=flat-square&labelColor=0d2e14&color=3ecf6c) |
 
 
 Niche shell supports:
@@ -107,7 +109,7 @@ Niche shell supports:
     - help: show the CLI manual
     - server: manages sheh childs
 
-> [!CAUTION]
+> [!WARNING]
 > 1.4.0 is deprecated because of a critical code mistake, please use  the later version of sheh
 (>v1.4.0)
 
