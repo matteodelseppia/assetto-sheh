@@ -128,6 +128,10 @@ Check more in [CHANGELOG]
 ![](https://img.shields.io/badge/unsupported-1a1a1a?style=flat-square&labelColor=1a1a1a&color=ffffff) Termux is currently not supported. Sheh relies on a native PTY environment, which is unavailable in Termux's sandbox. Support is planned for a future release.
 
 ---
+## Contribution
+Sheh are always welcome for cooperating. Contributors can contribute through by making a fork of this repository or using GitHub Codespaces then do a Pull Request
+
+---
 
 ## LICENSE
 Sheh (**Sh**ell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/waxodium/sheh/blob/main/LICENSE) Licensed
