@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `--network` option to explicitly expose the server to the local network.
 - Termux terminal support.
+
+### Changed
+- The server now binds to localhost by default, preventing local-network access unless `--network` is supplied.
 
 ## [1.4.1] - 2026-05-13
 ### Fixed!:

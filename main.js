@@ -35,7 +35,7 @@ program
     .description('Display help for a command')
     .action((command) => {
         if (command === 'server') {
-            console.log('Usage: sheh server --child [number]');
+            console.log('Usage: sheh server --child [number] [--network]');
         } else if (command === 'shell') {
             console.log('Usage: sheh shell');
         } else {
@@ -64,16 +64,19 @@ program
 
 program
     .command('server')
-    .description('Start the sheh server')
+    .description('Start the sheh server (localhost only by default)')
     .option('--child <number>', 'Number of child processes', '1')
+    .option('--network', 'Expose the server to the local network')
     .action((options) => {
         const count = parseInt(options.child) || 1;
-        manager.start(count);
+        manager.start(count, options.network);
     });
 
-program.action(() => {
-    manager.start(1);
-});
+program
+    .option('--network', 'Expose the server to the local network')
+    .action((options) => {
+        manager.start(1, options.network);
+    });
 
 program.showSuggestionAfterError(true);
 program.showHelpAfterError(true);
