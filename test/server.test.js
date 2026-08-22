@@ -4,7 +4,7 @@ const { once } = require('node:events');
 const path = require('node:path');
 const test = require('node:test');
 
-const { startServer } = require('../src/server.js');
+const { normalizeShell, startServer } = require('../src/server.js');
 
 async function stop(server) {
     await new Promise((resolve, reject) => {
@@ -26,6 +26,11 @@ test('network mode listens on every IPv4 interface', async (t) => {
 
     await once(server, 'listening');
     assert.equal(server.address().address, '0.0.0.0');
+});
+
+test('normalizes a macOS login shell name', () => {
+    assert.equal(normalizeShell('-zsh'), 'zsh');
+    assert.equal(normalizeShell('/bin/zsh'), '/bin/zsh');
 });
 
 test('CLI documents the explicit network option', () => {

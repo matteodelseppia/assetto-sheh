@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - The server now binds to localhost by default, preventing local-network access unless `--network` is supplied.
 
+### Fixed
+- macOS login shells such as `-zsh` now start correctly in terminal sessions.
+
 ## [1.4.1] - 2026-05-13
 ### Fixed!:
   - Removed this particular lines in the startServer():
