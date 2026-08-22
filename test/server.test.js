@@ -68,6 +68,39 @@ test('websocket starts a terminal session', async (t) => {
     assert.equal(websocket.readyState, WebSocket.OPEN);
 });
 
+test('PowerShell accepts terminal commands on Windows', { skip: process.platform !== 'win32' }, async (t) => {
+    const server = startServer();
+    await once(server, 'listening');
+
+    const { port } = server.address();
+    const websocket = new WebSocket(`ws://127.0.0.1:${port}`);
+    t.after(async () => {
+        websocket.terminate();
+        await stop(server);
+    });
+    await once(websocket, 'open');
+
+    const marker = '__SHEH_POWERSHELL_TEST__';
+    const output = await new Promise((resolve, reject) => {
+        let terminalOutput = '';
+        const timeout = setTimeout(() => reject(new Error('PowerShell did not return test output')), 5000);
+        websocket.on('message', (data) => {
+            terminalOutput += data.toString();
+            if (terminalOutput.includes(marker)) {
+                clearTimeout(timeout);
+                resolve(terminalOutput);
+            }
+        });
+        websocket.on('close', (code) => {
+            clearTimeout(timeout);
+            reject(new Error(`PowerShell websocket closed with code ${code}`));
+        });
+        websocket.send(`Write-Output ${marker}\r`);
+    });
+
+    assert.match(output, new RegExp(marker));
+});
+
 test('CLI documents the explicit network option', () => {
     const result = spawnSync(process.execPath, [path.join(__dirname, '..', 'main.js'), '--help'], {
         encoding: 'utf8'
