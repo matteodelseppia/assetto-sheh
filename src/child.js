@@ -21,11 +21,11 @@
 const path = require('path');
 const { startServer } = require('./server.js');
 
-function start(count) {
+function start(count, network = false) {
     const instances = parseInt(count) || 1;
 
     for (let i = 0; i < instances; i++) {
-        startServer();
+        startServer({ network });
     }
 }
 

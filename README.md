@@ -3,7 +3,7 @@
 > **Sh**ell **E**xposed **H**TTP
 
 [Gotty](https://github.com/yudai/gotty) inspired.
-Sheh is a command line tool that broadcast you terminal to your browser locally and with local network. Sheh works for every Unix/Linux shells and even powershell !
+Sheh is a command line tool that broadcasts your terminal to your browser on localhost. It works for every Unix/Linux shell and even PowerShell!
 
 ![NPM Version](https://img.shields.io/npm/v/@waxory/sheh?color=red)
 ![javascript](https://img.shields.io/badge/language-javascript-yellow)
@@ -53,7 +53,17 @@ Launching ***S**hell **E**xposed **H**TTP*...
 sheh
 ```
 
-And it will outputs something like this:
+By default, Sheh binds only to `127.0.0.1`, so it cannot be accessed from your local network.
+
+To intentionally expose it on your local network, use:
+
+```bash
+sheh --network
+```
+
+The network mode has no authentication or encryption; use it only on networks you trust.
+
+It will output something like this:
 
 <img width="612" height="260" alt="output" src="https://github.com/user-attachments/assets/ad4c870e-0555-41a6-ab6a-8de1c4b65950" />
 
@@ -70,7 +80,7 @@ Sheh is simplified. Including its functionality and setup.
 
 ### Traits:
 * Works for every shells.
-* Host locally on your network or machine.
+* Hosts on localhost by default; local-network access requires `--network`.
 * Usage through Browser. (Modern such as Firefox, Chrome, Edge)
 * UX keys control for mobile devices.
 
@@ -123,7 +133,7 @@ Check more in [CHANGELOG]
 > Sheh is in an early stage of concept and development. Expect bugs, vulnerabilities, and missing features.
 
 > [!CAUTION]
-> Sheh is intended for local use only and provides no built-in authentication, encryption, or sandboxing. By running this application, you are creating a live, unshielded broadcast of your system's terminal; any commands executed as malicious or otherwise WILL impact your host machine in real time. In accordance with the GPL-3.0 license, this software is provided "as is" without warranty of any kind. The authors assume no liability for data loss, security breaches, or system damage resulting from its use. Use at your own risk.
+> Sheh binds to localhost by default. Passing `--network` exposes an unauthenticated, unencrypted, unsandboxed terminal on your local network; anyone who can reach it can run commands as you. Use network mode only on a trusted network. In accordance with the GPL-3.0 license, this software is provided "as is" without warranty of any kind. The authors assume no liability for data loss, security breaches, or system damage resulting from its use. Use at your own risk.
 
 ![](https://img.shields.io/badge/unsupported-1a1a1a?style=flat-square&labelColor=1a1a1a&color=ffffff) Termux is currently not supported. Sheh relies on a native PTY environment, which is unavailable in Termux's sandbox. Support is planned for a future release.
 

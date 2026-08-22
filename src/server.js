@@ -96,30 +96,31 @@ webSocketServe.on('connection', (websocket) => {
 
 
 
-function startServer() {
-    server.listen(0, '0.0.0.0', () => {
-        const Networkdetail = Object.values(os.networkInterfaces()).flat();
-        const network = Networkdetail.find(details => details.family === 'IPv4' && details.internal === false);
-        const assigned = server.address().port;
-        
-        let address = 'localhost';
-        if (network) {
-            address = network.address;
-        }
+function startServer({ network = false } = {}) {
+    const host = network ? '0.0.0.0' : '127.0.0.1';
 
+    server.listen(0, host, () => {
+        const assigned = server.address().port;
         const coralGreen = '\x1b[38;5;167m';
         const lowerGreen = '\x1b[38;2;180;210;170m';
         const dimWhite = '\x1b[2m';
         const reset = '\x1b[0m';
         const bold = '\x1b[1m';
+        let networkAddress = `${dimWhite}Network:${reset} disabled (use --network to expose it)\n`;
+
+        if (network) {
+            const networkDetails = Object.values(os.networkInterfaces()).flat();
+            const networkInterface = networkDetails.find(details => details.family === 'IPv4' && details.internal === false);
+            const address = networkInterface ? networkInterface.address : 'localhost';
+            networkAddress = `${lowerGreen}Network:${reset} http://${address}:${coralGreen}${assigned}${reset}\n`;
+        }
 
         console.log(`\n${bold}Shell Exposed HTTP${reset}
 ${dimWhite}Status:${coralGreen} Online ${reset}
 ${dimWhite}Port:${coralGreen} ${assigned}${reset}
 
 ${lowerGreen}Local:${reset} http://localhost:${coralGreen}${assigned}${reset}
-${lowerGreen}Network:${reset} http://${address}:${coralGreen}${assigned}${reset}
-`);
+${networkAddress}`);
     });
 }
 
