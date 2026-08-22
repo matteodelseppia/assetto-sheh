@@ -21,6 +21,7 @@
 */
 
 
+const fs = require('fs')
 const express = require('express')
 const http = require('http')
 const nodepty = require('node-pty')
@@ -28,28 +29,82 @@ const { WebSocketServer } = require('ws')
 const path = require('path')
 const os = require('os')
 const morgan = require('morgan')
-const { execSync } = require('child_process')
+const { execFileSync } = require('child_process')
 
 const webapp = express()
 const server = http.createServer(webapp);
 webapp.use(express.static(path.join(__dirname, '..', 'public')));
 webapp.use('/lib', express.static(path.join(__dirname, '..', 'lib')));
 
-    
-function getShell() {
+function ensureExecutable(filePath) {
+    const mode = fs.statSync(filePath).mode;
+    if (!(mode & 0o111)) {
+        fs.chmodSync(filePath, mode | 0o111);
+    }
+}
+
+function ensurePtyHelperIsExecutable() {
     if (process.platform === 'win32') {
-        return 'powershell.exe'
-    };
-
-
-    let shellName
-    try {
-        shellName = execSync('ps -p $(ps -p $PPID -o ppid=) -o comm=').toString().trim();
-    } catch (error) {
-        return '/bin/sh'
+        return;
     }
 
-    return shellName
+    const nodePtyPath = path.dirname(require.resolve('node-pty/package.json'));
+    const helperPaths = [
+        path.join(nodePtyPath, 'prebuilds', `${process.platform}-${process.arch}`, 'spawn-helper'),
+        path.join(nodePtyPath, 'build', 'Release', 'spawn-helper')
+    ];
+
+    for (const helperPath of helperPaths) {
+        if (fs.existsSync(helperPath)) {
+            ensureExecutable(helperPath);
+            return;
+        }
+    }
+}
+
+ensurePtyHelperIsExecutable();
+
+function normalizeShell(shellName) {
+    return shellName.trim().replace(/^-/, '');
+}
+
+function getShell() {
+    if (process.platform === 'win32') {
+        return 'powershell.exe';
+    }
+
+    try {
+        const shellName = execFileSync('ps', ['-p', String(process.ppid), '-o', 'comm='], { encoding: 'utf8' });
+        const shell = normalizeShell(shellName);
+        if (shell) {
+            return shell;
+        }
+    } catch (error) {
+        // Fall back to the configured shell below.
+    }
+
+    return process.env.SHELL || '/bin/sh';
+}
+
+function spawnShell() {
+    const shellNames = [...new Set([getShell(), process.env.SHELL, '/bin/sh'].filter(Boolean))];
+    let error;
+
+    for (const shellName of shellNames) {
+        try {
+            return nodepty.spawn(shellName, [], {
+                name: 'xterm-256color',
+                cols: 80,
+                rows: 30,
+                cwd: os.homedir(),
+                env: process.env
+            });
+        } catch (spawnError) {
+            error = spawnError;
+        }
+    }
+
+    throw error;
 }
 
 
@@ -58,14 +113,14 @@ const webSocketServe = new WebSocketServer({ server })
 webSocketServe.on('connection', (websocket) => {
 
 
-    const shellName = getShell();
-    const shell = nodepty.spawn(shellName, [], {
-        name: 'xterm-256color',
-        cols: 80,
-        rows: 30,
-        cwd: os.homedir(),
-        env: process.env
-    });
+    let shell;
+    try {
+        shell = spawnShell();
+    } catch (error) {
+        console.error('Unable to start a shell session:', error);
+        websocket.close(1011, 'Unable to start a shell session');
+        return;
+    }
 
     shell.onData((data) => {
         if (websocket.readyState === websocket.OPEN) {
@@ -153,5 +208,5 @@ webapp.use(
 );
 
 
-module.exports = { startServer, getShell };
+module.exports = { ensureExecutable, startServer, getShell, normalizeShell };
 
