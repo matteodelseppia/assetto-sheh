@@ -53,6 +53,8 @@ Launching ***S**hell **E**xposed **H**TTP*...
 sheh
 ```
 
+Sheh automatically opens its local URL in your default browser.
+
 By default, Sheh binds only to `127.0.0.1`, so it cannot be accessed from your local network.
 
 To intentionally expose it on your local network, use:
@@ -62,6 +64,12 @@ sheh --network
 ```
 
 The network mode has no authentication or encryption; use it only on networks you trust.
+
+From a browser terminal session, set the browser tab title with:
+
+```bash
+sheh --title "my-title"
+```
 
 It will output something like this:
 

@@ -30,6 +30,11 @@ const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'ut
 
 const program = new Command();
 
+function setTerminalTitle(title) {
+    // OSC 2 is understood by terminal emulators, including xterm.js.
+    process.stdout.write(`\x1b]2;${title}\x07`);
+}
+
 program
     .command('help [command]')
     .description('Display help for a command')
@@ -74,7 +79,13 @@ program
 
 program
     .option('--network', 'Expose the server to the local network')
+    .option('--title <title>', 'Set the browser terminal tab title')
     .action((options) => {
+        if (options.title !== undefined) {
+            setTerminalTitle(options.title);
+            return;
+        }
+
         manager.start(1, options.network);
     });
 
