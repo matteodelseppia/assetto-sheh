@@ -146,6 +146,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     const viewport = document.getElementById('viewport')
     
     terminal.open(terminalElement);
+    terminal.onTitleChange(function(title) {
+        document.title = title;
+    });
     const socket = new WebSocket("ws://" + window.location.host)
 
     const Mobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)

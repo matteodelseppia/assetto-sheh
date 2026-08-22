@@ -29,7 +29,7 @@ const { WebSocketServer } = require('ws')
 const path = require('path')
 const os = require('os')
 const morgan = require('morgan')
-const { execFileSync } = require('child_process')
+const { execFileSync, spawn } = require('child_process')
 
 const webapp = express()
 const server = http.createServer(webapp);
@@ -84,6 +84,31 @@ function getShell() {
     }
 
     return process.env.SHELL || '/bin/sh';
+}
+
+function openBrowser(url, { platform = process.platform, spawnProcess = spawn } = {}) {
+    let command;
+    let args;
+
+    if (platform === 'darwin') {
+        command = 'open';
+        args = [url];
+    } else if (platform === 'win32') {
+        command = 'cmd.exe';
+        args = ['/c', 'start', '', url];
+    } else if (platform === 'linux') {
+        command = 'xdg-open';
+        args = [url];
+    } else {
+        return false;
+    }
+
+    const browser = spawnProcess(command, args, { detached: true, stdio: 'ignore' });
+    browser.on('error', (error) => {
+        console.error(`Unable to open the browser: ${error.message}`);
+    });
+    browser.unref();
+    return true;
 }
 
 function spawnShell() {
@@ -151,7 +176,7 @@ webSocketServe.on('connection', (websocket) => {
 
 
 
-function startServer({ network = false } = {}) {
+function startServer({ network = false, openBrowser: shouldOpenBrowser = true, browserOpener = openBrowser } = {}) {
     const host = network ? '0.0.0.0' : '127.0.0.1';
 
     server.listen(0, host, () => {
@@ -170,12 +195,18 @@ function startServer({ network = false } = {}) {
             networkAddress = `${lowerGreen}Network:${reset} http://${address}:${coralGreen}${assigned}${reset}\n`;
         }
 
+        const localUrl = `http://localhost:${assigned}`;
+
         console.log(`\n${bold}Shell Exposed HTTP${reset}
 ${dimWhite}Status:${coralGreen} Online ${reset}
 ${dimWhite}Port:${coralGreen} ${assigned}${reset}
 
 ${lowerGreen}Local:${reset} http://localhost:${coralGreen}${assigned}${reset}
 ${networkAddress}`);
+
+        if (shouldOpenBrowser) {
+            browserOpener(localUrl);
+        }
     });
 
     return server;
@@ -208,5 +239,5 @@ webapp.use(
 );
 
 
-module.exports = { ensureExecutable, startServer, getShell, normalizeShell };
+module.exports = { ensureExecutable, startServer, getShell, normalizeShell, openBrowser };
 
