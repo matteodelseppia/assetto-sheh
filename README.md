@@ -5,7 +5,7 @@
 [Gotty](https://github.com/yudai/gotty) inspired.
 Sheh is a command line tool that broadcasts your terminal to your browser on localhost. It works for every Unix/Linux shell and even PowerShell!
 
-![NPM Version](https://img.shields.io/npm/v/@waxory/sheh?color=red)
+![NPM Version](https://img.shields.io/npm/v/@matteodelseppia/assetto-sheh?color=red)
 ![javascript](https://img.shields.io/badge/language-javascript-yellow)
 ![license](https://img.shields.io/badge/license-GPLv3.0-blue)
 
@@ -40,7 +40,7 @@ Sheh is a command line tool that broadcasts your terminal to your browser on loc
 Get via the node package manager registry.
 
 ```bash
-npm install -g @waxory/sheh
+npm install -g @matteodelseppia/assetto-sheh
 ```
 
 ---
@@ -67,7 +67,7 @@ It will output something like this:
 
 <img width="612" height="260" alt="output" src="https://github.com/user-attachments/assets/ad4c870e-0555-41a6-ab6a-8de1c4b65950" />
 
-[Visit sheh wiki](https://github.com/waxodium/sheh/wiki) for more documentations and CLI usage
+[Visit sheh wiki](https://github.com/matteodelseppia/assetto-sheh/wiki) for more documentations and CLI usage
 
 ---
 
@@ -144,10 +144,10 @@ Sheh are always welcome for cooperating. Contributors can contribute through by 
 ---
 
 ## LICENSE
-Sheh (**Sh**ell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/waxodium/sheh/blob/main/LICENSE) Licensed
+Sheh (**Sh**ell **E**xposed **H**TTP) is [GPL-3.0](https://github.com/matteodelseppia/assetto-sheh/blob/main/LICENSE) Licensed
 
 
-[CHANGELOG]: https://github.com/waxodium/sheh/blob/main/CHANGELOG.md
+[CHANGELOG]: https://github.com/matteodelseppia/assetto-sheh/blob/main/CHANGELOG.md
 
 
 
