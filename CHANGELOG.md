@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - macOS login shells such as `-zsh` now start correctly in terminal sessions.
+- macOS terminal sessions recover when npm installs the node-pty spawn helper without execute permission.
 
 ## [1.4.1] - 2026-05-13
 ### Fixed!:

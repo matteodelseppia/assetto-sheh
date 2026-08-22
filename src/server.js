@@ -21,6 +21,7 @@
 */
 
 
+const fs = require('fs')
 const express = require('express')
 const http = require('http')
 const nodepty = require('node-pty')
@@ -35,7 +36,34 @@ const server = http.createServer(webapp);
 webapp.use(express.static(path.join(__dirname, '..', 'public')));
 webapp.use('/lib', express.static(path.join(__dirname, '..', 'lib')));
 
-    
+function ensureExecutable(filePath) {
+    const mode = fs.statSync(filePath).mode;
+    if (!(mode & 0o111)) {
+        fs.chmodSync(filePath, mode | 0o111);
+    }
+}
+
+function ensurePtyHelperIsExecutable() {
+    if (process.platform === 'win32') {
+        return;
+    }
+
+    const nodePtyPath = path.dirname(require.resolve('node-pty/package.json'));
+    const helperPaths = [
+        path.join(nodePtyPath, 'prebuilds', `${process.platform}-${process.arch}`, 'spawn-helper'),
+        path.join(nodePtyPath, 'build', 'Release', 'spawn-helper')
+    ];
+
+    for (const helperPath of helperPaths) {
+        if (fs.existsSync(helperPath)) {
+            ensureExecutable(helperPath);
+            return;
+        }
+    }
+}
+
+ensurePtyHelperIsExecutable();
+
 function normalizeShell(shellName) {
     return shellName.trim().replace(/^-/, '');
 }
@@ -180,5 +208,5 @@ webapp.use(
 );
 
 
-module.exports = { startServer, getShell, normalizeShell };
+module.exports = { ensureExecutable, startServer, getShell, normalizeShell };
 
