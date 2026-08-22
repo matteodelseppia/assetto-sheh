@@ -1,8 +1,14 @@
 name: CD
 
 on:
-  push:
-    tags: ['v*']
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: cd-${{ github.workflow }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -11,9 +17,12 @@ permissions:
 jobs:
   publish:
     name: Publish to npm
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -23,6 +32,6 @@ jobs:
       - name: Verify package
         run: npm run check
       - name: Publish
-        run: npm publish --access public
+        run: npm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
