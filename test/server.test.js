@@ -36,7 +36,7 @@ test('normalizes a macOS login shell name', () => {
     assert.equal(normalizeShell('/bin/zsh'), '/bin/zsh');
 });
 
-test('makes the node-pty helper executable', (t) => {
+test('makes the Unix node-pty helper executable', { skip: process.platform === 'win32' }, (t) => {
     const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'sheh-'));
     const helperPath = path.join(directory, 'spawn-helper');
     fs.writeFileSync(helperPath, 'helper', { mode: 0o600 });
