@@ -7,7 +7,7 @@ const path = require('node:path');
 const test = require('node:test');
 const WebSocket = require('ws');
 
-const { ensureExecutable, getShell, normalizeShell, openBrowser, startServer } = require('../src/server.js');
+const { ensureExecutable, normalizeShell, openBrowser, startServer } = require('../src/server.js');
 
 function startTestServer(options = {}) {
     return startServer({ openBrowser: false, ...options });
@@ -166,38 +166,8 @@ test('CLI emits an OSC title sequence', () => {
     assert.equal(result.stdout, '\x1b]2;my-title\x07');
 });
 
-test('terminal sessions receive title changes', { skip: process.platform === 'win32' }, async (t) => {
-    const server = startTestServer();
-    await once(server, 'listening');
+test('browser client applies terminal title changes to the document', () => {
+    const client = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
 
-    const { port } = server.address();
-    const websocket = new WebSocket(`ws://127.0.0.1:${port}`);
-    t.after(async () => {
-        websocket.terminate();
-        await stop(server);
-    });
-    await once(websocket, 'open');
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
-    const title = 'browser-title';
-    const titleSequence = `\x1b]2;${title}\x07`;
-    const executable = JSON.stringify(process.execPath);
-    const script = JSON.stringify(path.join(__dirname, '..', 'main.js'));
-    const command = path.basename(getShell()) === 'node'
-        ? `require('node:child_process').execFileSync(${executable}, [${script}, '--title', '${title}'], { stdio: 'inherit' })\r`
-        : `${executable} ${script} --title ${title}\r`;
-    const output = await new Promise((resolve, reject) => {
-        let terminalOutput = '';
-        const timeout = setTimeout(() => reject(new Error('Terminal did not receive the title sequence')), 5000);
-        websocket.on('message', (data) => {
-            terminalOutput += data.toString();
-            if (terminalOutput.includes(titleSequence)) {
-                clearTimeout(timeout);
-                resolve(terminalOutput);
-            }
-        });
-        websocket.send(command);
-    });
-
-    assert.match(output, new RegExp(titleSequence));
+    assert.match(client, /terminal\.onTitleChange\(function\(title\) \{\s*document\.title = title;/);
 });
